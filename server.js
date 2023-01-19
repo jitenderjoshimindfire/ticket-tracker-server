@@ -18,6 +18,11 @@ mongoose.connect(DB).then((con) => {
   console.log("DB CONNECTION SUCCESSFUL");
 });
 
+app.get("/", (req, res, next) => {
+  res.status(200).json({
+    status: "success",
+  });
+});
 const port = process.env.PORT || 3000;
 
 const server = app.listen(port, () => {
