@@ -21,7 +21,7 @@ const ticketSchema = new mongoose.Schema({
   },
   productType: {
     type: String,
-    required: [true, "A ticket must have a author"],
+    required: [true, "A ticket must have a type"],
     unique: false,
     maxLength: [30, "A ticket title must have less or equal to 100 characters"],
     minLength: [5, "A ticket title must have more than 10 characters"],
@@ -35,6 +35,13 @@ const ticketSchema = new mongoose.Schema({
     required: [true, "A ticket must have a author"],
     unique: false,
     maxLength: [30, "A ticket title must have less or equal to 100 characters"],
+    minLength: [5, "A ticket title must have more than 10 characters"],
+  },
+  ticketState: {
+    type: String,
+    required: [true, "A ticket must have a state"],
+    unique: false,
+    maxLength: [20, "A ticket title must have less or equal to 100 characters"],
     minLength: [5, "A ticket title must have more than 10 characters"],
   },
   description: {
