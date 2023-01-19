@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const validator = require("validator");
 
 const ticketSchema = new mongoose.Schema({
   title: {
@@ -14,7 +15,7 @@ const ticketSchema = new mongoose.Schema({
   userEmail: {
     type: String,
     required: [true, "Please provide your email"],
-    unique: true, 
+    unique: true,
     lowercase: true,
     validate: [validator.isEmail, "Please provide a valid email"],
   },
