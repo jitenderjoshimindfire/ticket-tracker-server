@@ -6,7 +6,16 @@ const { Comment } = require("../models/commentModel");
 
 exports.getAllTickets = async (req, res, next) => {
   try {
-    const tickets = await Ticket.find();
+    const tickets = await Ticket.find()
+      .populate("assignedTo", "name email")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "user",
+          model: "User",
+          select: "_id name email",
+        },
+      });
     console.log("inside All tickets");
     res.status(200).json({
       status: "success",
@@ -136,15 +145,17 @@ exports.postComment = async (req, res) => {
 
 exports.assignedTo = async (req, res) => {
   try {
-    const { _email } = req.body;
-    const { _ticketId } = req.params;
+    const { email } = req.body;
+    const { ticketId } = req.params;
 
-    const ticket = await Ticket.findById(_ticketId);
+    //console.log(email, ticketId);
+
+    const ticket = await Ticket.findById(ticketId);
     if (!ticket) {
       new AppError(`Ticket with ${ticketId} not available!`, 404);
     }
 
-    const user = await User.findOne({ _email });
+    const user = await User.findOne({ email });
 
     ticket.assignedTo = user;
     const updatedTicket = await ticket.save();

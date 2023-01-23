@@ -36,7 +36,10 @@ const ticketSchema = new mongoose.Schema(
       type: String,
     },
     comments: [commentSchema],
-    assignedTo: { type: mongoose.Schema.ObjectId, ref: "User" },
+    assignedTo: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+    },
   },
   { timestamps: true }
 );
