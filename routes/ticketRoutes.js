@@ -6,7 +6,11 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(ticketController.getAllTickets)
+  .get(
+    authController.protect,
+    authController.restrictTo("admin"),
+    ticketController.getAllTickets
+  )
   .post(ticketController.createTicket);
 
 router
@@ -15,8 +19,11 @@ router
   .patch(ticketController.updateTicket)
   .delete(
     authController.protect,
-    authController.restrictTo("admin", "lead-guide"),
+    authController.restrictTo("admin"),
     ticketController.deleteTicket
   );
+
+router.route("/:ticketId/comments").post(ticketController.postComment);
+router.route("/:ticketId/assign").post(ticketController.assignedTo);
 
 module.exports = router;
